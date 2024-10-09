@@ -25,4 +25,13 @@ public class CustomerController {
     public CustomerDTO getCustomerById(@PathVariable ("custId") String custId) {
         return null;
     }
+    @PatchMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public void updateCustomer(@PathVariable ("custId") String custId, @RequestBody CustomerDTO customer) {
+        System.out.println(custId);
+        System.out.println(customer + "Updated Successfully");
+    }
+    @DeleteMapping
+    public void deleteCustomer(@PathVariable ("custId") String custId) {
+        System.out.println(custId + "Deleted Successfully");
+    }
 }
