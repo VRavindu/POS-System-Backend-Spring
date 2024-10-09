@@ -1,7 +1,10 @@
 package lk.ijse.gdse.possystembackendspring.controller;
 
 import lk.ijse.gdse.possystembackendspring.dto.CustomerDTO;
+import lk.ijse.gdse.possystembackendspring.service.CustomerService;
 import lk.ijse.gdse.possystembackendspring.util.AppUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +14,17 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/customer")
 public class CustomerController {
+    @Autowired
+    private CustomerService customerService;
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createCustomer(@RequestBody CustomerDTO customer) {
-        customer.setId(AppUtil.CreateCustomerId());
-        System.out.println(customer);
-        return ResponseEntity.ok("Customer Saved Successfully");
+        var isSaved = customerService.saveCustomer(customer);
+        if (isSaved.contains("Customer Saved Successfully")){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping(value = "allcustomer", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDTO> getAllCustomers() {

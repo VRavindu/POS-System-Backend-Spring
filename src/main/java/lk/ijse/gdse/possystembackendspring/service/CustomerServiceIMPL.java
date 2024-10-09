@@ -2,6 +2,7 @@ package lk.ijse.gdse.possystembackendspring.service;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse.possystembackendspring.dto.CustomerDTO;
+import lk.ijse.gdse.possystembackendspring.entity.CustomerEntity;
 import lk.ijse.gdse.possystembackendspring.repository.CustomerRepository;
 import lk.ijse.gdse.possystembackendspring.util.AppUtil;
 import lk.ijse.gdse.possystembackendspring.util.Mapping;
@@ -25,7 +26,12 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public String saveCustomer(CustomerDTO customerDTO) {
         customerDTO.setId(AppUtil.CreateCustomerId());
-        return null;
+        CustomerEntity saveCust = customerRepository.save(mapping.convertToEntity(customerDTO));
+        if (saveCust != null && saveCust.getId() != null) {
+            return "Customer Saved Successfully";
+        }else {
+            return "Customer Save Failed";
+        }
     }
 
     @Override
