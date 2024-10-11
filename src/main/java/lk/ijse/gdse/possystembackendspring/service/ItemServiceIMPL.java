@@ -9,6 +9,7 @@ import lk.ijse.gdse.possystembackendspring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,7 +21,6 @@ public class ItemServiceIMPL implements ItemService{
         this.itemRepository = itemRepository;
         this.mapping = mapping;
     }
-
     @Override
     public String saveItem(ItemDTO itemDTO) {
         itemDTO.setItemCode(AppUtil.CreateItemCode());
@@ -31,10 +31,16 @@ public class ItemServiceIMPL implements ItemService{
             return "Item Save Failed";
         }
     }
-
     @Override
     public void updateItem(String itemCode, ItemDTO itemDTO) {
-
+        Optional<ItemEntity> tmpItemEntity = itemRepository.findById(itemCode);
+        if (!tmpItemEntity.isPresent()){
+            throw new RuntimeException("Item Not Found");
+        }else {
+            tmpItemEntity.get().setDescription(itemDTO.getDescription());
+            tmpItemEntity.get().setQuantity(itemDTO.getQuantity());
+            tmpItemEntity.get().setPrice(itemDTO.getPrice());
+        }
     }
 
     @Override
