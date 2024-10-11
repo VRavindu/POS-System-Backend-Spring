@@ -1,5 +1,4 @@
 package lk.ijse.gdse.possystembackendspring.service;
-
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse.possystembackendspring.dto.CustomerDTO;
 import lk.ijse.gdse.possystembackendspring.entity.CustomerEntity;
@@ -8,7 +7,6 @@ import lk.ijse.gdse.possystembackendspring.util.AppUtil;
 import lk.ijse.gdse.possystembackendspring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +15,11 @@ import java.util.Optional;
 public class CustomerServiceIMPL implements CustomerService {
     private final CustomerRepository customerRepository;
     private final Mapping mapping;
-
     @Autowired
     public CustomerServiceIMPL(CustomerRepository customerRepository, Mapping mapping) {
         this.customerRepository = customerRepository;
         this.mapping = mapping;
     }
-
     @Override
     public String saveCustomer(CustomerDTO customerDTO) {
         customerDTO.setId(AppUtil.CreateCustomerId());
@@ -62,9 +58,8 @@ public class CustomerServiceIMPL implements CustomerService {
             throw new RuntimeException("Customer Not Found");
         }
     }
-
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        return List.of();
+        return mapping.convertToDtoList(customerRepository.findAll());
     }
 }

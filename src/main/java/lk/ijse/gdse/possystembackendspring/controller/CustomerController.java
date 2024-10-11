@@ -1,5 +1,4 @@
 package lk.ijse.gdse.possystembackendspring.controller;
-
 import lk.ijse.gdse.possystembackendspring.dto.CustomerDTO;
 import lk.ijse.gdse.possystembackendspring.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -15,7 +13,6 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
-
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createCustomer(@RequestBody CustomerDTO customer) {
         var isSaved = customerService.saveCustomer(customer);
@@ -53,10 +50,9 @@ public class CustomerController {
     public CustomerDTO getCustomerById(@PathVariable ("custId") String custId) {
         return customerService.getCustomer(custId);
     }
-
     @GetMapping(value = "allcustomer", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDTO> getAllCustomers() {
-        return null;
+        return customerService.getAllCustomers();
     }
 
 
