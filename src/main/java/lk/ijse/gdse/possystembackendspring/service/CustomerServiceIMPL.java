@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,10 +34,16 @@ public class CustomerServiceIMPL implements CustomerService {
             return "Customer Save Failed";
         }
     }
-
     @Override
     public void updateCustomer(String custId, CustomerDTO customerDTO) {
-
+        Optional<CustomerEntity> tmpCustEntity = customerRepository.findById(custId);
+        if (!tmpCustEntity.isPresent()) {
+            throw new RuntimeException("Customer Not Found");
+        }else {
+            tmpCustEntity.get().setName(customerDTO.getName());
+            tmpCustEntity.get().setAddress(customerDTO.getAddress());
+            tmpCustEntity.get().setSalary(customerDTO.getSalary());
+        }
     }
 
     @Override
