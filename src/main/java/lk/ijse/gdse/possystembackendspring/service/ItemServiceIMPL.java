@@ -59,9 +59,8 @@ public class ItemServiceIMPL implements ItemService{
             throw new RuntimeException("Item Not Found");
         }
     }
-
     @Override
     public List<ItemDTO> getAllItems() {
-        return List.of();
+        return mapping.convertToItemDtoList(itemRepository.findAll());
     }
 }

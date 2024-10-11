@@ -54,4 +54,8 @@ public class ItemController {
     public ItemDTO getItem(@PathVariable ("itemCode") String itemCode){
         return itemService.getItem(itemCode);
     }
+    @GetMapping(value = "allitems", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Iterable<ItemDTO> getAllItems(){
+        return itemService.getAllItems();
+    }
 }
