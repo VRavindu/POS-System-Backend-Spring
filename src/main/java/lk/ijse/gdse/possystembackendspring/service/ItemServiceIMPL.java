@@ -51,10 +51,13 @@ public class ItemServiceIMPL implements ItemService{
             itemRepository.deleteById(itemCode);
         }
     }
-
     @Override
     public ItemDTO getItem(String itemCode) {
-        return null;
+        if (itemRepository.existsById(itemCode)){
+            return mapping.convertToDto(itemRepository.getReferenceById(itemCode));
+        }else {
+            throw new RuntimeException("Item Not Found");
+        }
     }
 
     @Override

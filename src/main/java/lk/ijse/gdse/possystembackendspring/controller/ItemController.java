@@ -50,4 +50,8 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ItemDTO getItem(@PathVariable ("itemCode") String itemCode){
+        return itemService.getItem(itemCode);
+    }
 }
