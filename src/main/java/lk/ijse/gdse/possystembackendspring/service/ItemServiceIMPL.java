@@ -42,10 +42,14 @@ public class ItemServiceIMPL implements ItemService{
             tmpItemEntity.get().setPrice(itemDTO.getPrice());
         }
     }
-
     @Override
     public void deleteItem(String itemCode) {
-
+        Optional<ItemEntity> findId = itemRepository.findById(itemCode);
+        if (!findId.isPresent()){
+            throw new RuntimeException("Item Not Found");
+        }else {
+            itemRepository.deleteById(itemCode);
+        }
     }
 
     @Override
