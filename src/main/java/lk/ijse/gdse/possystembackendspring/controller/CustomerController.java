@@ -38,13 +38,23 @@ public class CustomerController {
         }
     }
     @DeleteMapping(value = "/{custId}")
-    public void deleteCustomer(@PathVariable ("custId") String custId) {
-        System.out.println(custId + "Deleted Successfully");
+    public ResponseEntity<String> deleteCustomer(@PathVariable ("custId") String custId) {
+        try{
+            if (custId == null || custId.equals("")){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.deleteCustomer(custId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
     @GetMapping(value = "/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerDTO getCustomerById(@PathVariable ("custId") String custId) {
         return null;
     }
+
     @GetMapping(value = "allcustomer", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CustomerDTO> getAllCustomers() {
         return null;

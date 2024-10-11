@@ -45,10 +45,14 @@ public class CustomerServiceIMPL implements CustomerService {
             tmpCustEntity.get().setSalary(customerDTO.getSalary());
         }
     }
-
     @Override
     public void deleteCustomer(String custId) {
-
+        Optional<CustomerEntity> findId = customerRepository.findById(custId);
+        if (!findId.isPresent()){
+            throw new RuntimeException("Customer Not Found");
+        }else {
+            customerRepository.deleteById(custId);
+        }
     }
 
     @Override
