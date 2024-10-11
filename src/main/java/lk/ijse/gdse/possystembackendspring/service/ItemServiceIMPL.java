@@ -2,7 +2,9 @@ package lk.ijse.gdse.possystembackendspring.service;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.gdse.possystembackendspring.dto.ItemDTO;
+import lk.ijse.gdse.possystembackendspring.entity.ItemEntity;
 import lk.ijse.gdse.possystembackendspring.repository.ItemRepository;
+import lk.ijse.gdse.possystembackendspring.util.AppUtil;
 import lk.ijse.gdse.possystembackendspring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +23,13 @@ public class ItemServiceIMPL implements ItemService{
 
     @Override
     public String saveItem(ItemDTO itemDTO) {
-        return "";
+        itemDTO.setItemCode(AppUtil.CreateItemCode());
+        ItemEntity saveItem = itemRepository.save(mapping.convertToEntity(itemDTO));
+        if (saveItem != null && saveItem.getItemCode() != null){
+            return "Item Saved Successfully";
+        }else {
+            return "Item Save Failed";
+        }
     }
 
     @Override
