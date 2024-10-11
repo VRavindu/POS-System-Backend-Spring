@@ -49,10 +49,9 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping(value = "/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CustomerDTO getCustomerById(@PathVariable ("custId") String custId) {
-        return null;
+        return customerService.getCustomer(custId);
     }
 
     @GetMapping(value = "allcustomer", produces = MediaType.APPLICATION_JSON_VALUE)

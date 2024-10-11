@@ -54,10 +54,13 @@ public class CustomerServiceIMPL implements CustomerService {
             customerRepository.deleteById(custId);
         }
     }
-
     @Override
     public CustomerDTO getCustomer(String custId) {
-        return null;
+        if (customerRepository.existsById(custId)){
+            return mapping.convertToDto(customerRepository.getReferenceById(custId));
+        }else {
+            throw new RuntimeException("Customer Not Found");
+        }
     }
 
     @Override
