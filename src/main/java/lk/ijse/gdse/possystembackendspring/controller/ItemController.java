@@ -27,7 +27,7 @@ public class ItemController {
     @PatchMapping(value = "/{itemCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateItem(@PathVariable ("itemCode") String itemCode, @RequestBody ItemDTO item){
         try {
-            if (item == null && (itemCode == null || itemCode.equals(""))){
+            if (item == null && (itemCode == null || itemCode.isEmpty())){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }else {
                 itemService.updateItem(itemCode, item);
@@ -40,7 +40,7 @@ public class ItemController {
     @DeleteMapping(value = "/{itemCode}")
     public ResponseEntity<String> deleteItem(@PathVariable ("itemCode") String itemCode){
         try {
-            if (itemCode == null || itemCode.equals("")){
+            if (itemCode == null || itemCode.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }else {
                 itemService.deleteItem(itemCode);

@@ -25,7 +25,7 @@ public class CustomerController {
     @PatchMapping(value = "/{custId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> updateCustomer(@PathVariable ("custId") String custId, @RequestBody CustomerDTO customer) {
         try{
-            if (customer == null && (custId == null || custId.equals(""))){
+            if (customer == null && (custId == null || custId.isEmpty())){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             customerService.updateCustomer(custId, customer);
@@ -37,7 +37,7 @@ public class CustomerController {
     @DeleteMapping(value = "/{custId}")
     public ResponseEntity<String> deleteCustomer(@PathVariable ("custId") String custId) {
         try{
-            if (custId == null || custId.equals("")){
+            if (custId == null || custId.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             customerService.deleteCustomer(custId);

@@ -24,7 +24,7 @@ public class CustomerServiceIMPL implements CustomerService {
     public String saveCustomer(CustomerDTO customerDTO) {
         customerDTO.setId(AppUtil.CreateCustomerId());
         CustomerEntity saveCust = customerRepository.save(mapping.convertToEntity(customerDTO));
-        if (saveCust != null && saveCust.getId() != null) {
+        if (saveCust.getId() != null) {
             return "Customer Saved Successfully";
         }else {
             return "Customer Save Failed";
@@ -33,7 +33,7 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public void updateCustomer(String custId, CustomerDTO customerDTO) {
         Optional<CustomerEntity> tmpCustEntity = customerRepository.findById(custId);
-        if (!tmpCustEntity.isPresent()) {
+        if (tmpCustEntity.isEmpty()) {
             throw new RuntimeException("Customer Not Found");
         }else {
             tmpCustEntity.get().setName(customerDTO.getName());
@@ -44,7 +44,7 @@ public class CustomerServiceIMPL implements CustomerService {
     @Override
     public void deleteCustomer(String custId) {
         Optional<CustomerEntity> findId = customerRepository.findById(custId);
-        if (!findId.isPresent()){
+        if (findId.isEmpty()){
             throw new RuntimeException("Customer Not Found");
         }else {
             customerRepository.deleteById(custId);

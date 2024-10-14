@@ -25,16 +25,16 @@ public class ItemServiceIMPL implements ItemService{
     public String saveItem(ItemDTO itemDTO) {
         itemDTO.setItemCode(AppUtil.CreateItemCode());
         ItemEntity saveItem = itemRepository.save(mapping.convertToEntity(itemDTO));
-        if (saveItem != null && saveItem.getItemCode() != null){
+        if (saveItem.getItemCode() != null) {
             return "Item Saved Successfully";
-        }else {
+        } else {
             return "Item Save Failed";
         }
     }
     @Override
     public void updateItem(String itemCode, ItemDTO itemDTO) {
         Optional<ItemEntity> tmpItemEntity = itemRepository.findById(itemCode);
-        if (!tmpItemEntity.isPresent()){
+        if (tmpItemEntity.isEmpty()){
             throw new RuntimeException("Item Not Found");
         }else {
             tmpItemEntity.get().setDescription(itemDTO.getDescription());
@@ -45,7 +45,7 @@ public class ItemServiceIMPL implements ItemService{
     @Override
     public void deleteItem(String itemCode) {
         Optional<ItemEntity> findId = itemRepository.findById(itemCode);
-        if (!findId.isPresent()){
+        if (findId.isEmpty()){
             throw new RuntimeException("Item Not Found");
         }else {
             itemRepository.deleteById(itemCode);
