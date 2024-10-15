@@ -22,9 +22,9 @@ public class CustomerServiceIMPL implements CustomerService {
     }
     @Override
     public String saveCustomer(CustomerDTO customerDTO) {
-        customerDTO.setId(AppUtil.CreateCustomerId());
+        customerDTO.setCustId(AppUtil.CreateCustomerId());
         CustomerEntity saveCust = customerRepository.save(mapping.convertToEntity(customerDTO));
-        if (saveCust.getId() != null) {
+        if (saveCust.getCustId() != null) {
             return "Customer Saved Successfully";
         }else {
             return "Customer Save Failed";
@@ -36,7 +36,7 @@ public class CustomerServiceIMPL implements CustomerService {
         if (tmpCustEntity.isEmpty()) {
             throw new RuntimeException("Customer Not Found");
         }else {
-            tmpCustEntity.get().setName(customerDTO.getName());
+            tmpCustEntity.get().setCustName(customerDTO.getCustName());
             tmpCustEntity.get().setAddress(customerDTO.getAddress());
             tmpCustEntity.get().setSalary(customerDTO.getSalary());
         }
