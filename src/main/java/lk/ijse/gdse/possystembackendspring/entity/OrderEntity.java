@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -15,12 +14,19 @@ import java.util.List;
 public class OrderEntity {
     @Id
     private String orderId;
-    private LocalDate date;
+    private String date;
     private double total;
     private double discount;
+    private int quantity;
+
     @ManyToOne
-    @JoinColumn(name = "custId", referencedColumnName = "custId")
-    private CustomerEntity custId;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<OrderDetailEntity> orderDetails;
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
+    @ManyToMany
+    @JoinTable(
+            name = "order_items",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_code")
+    )
+    private List<ItemEntity> items;
 }
