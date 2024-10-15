@@ -3,6 +3,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +14,5 @@ public class OrderDTO {
     private double total;
     private double discount;
     private String customerId;
+    private List<OrderDetailDTO> orderDetails;
 }

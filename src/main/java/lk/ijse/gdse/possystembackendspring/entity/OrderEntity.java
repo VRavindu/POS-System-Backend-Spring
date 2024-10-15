@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +21,6 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn(name = "custId", referencedColumnName = "custId")
     private CustomerEntity custId;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<OrderDetailEntity> orderDetails;
 }
