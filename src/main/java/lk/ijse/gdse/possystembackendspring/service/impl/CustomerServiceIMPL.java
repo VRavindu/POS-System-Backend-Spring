@@ -1,8 +1,12 @@
-package lk.ijse.gdse.possystembackendspring.service;
+package lk.ijse.gdse.possystembackendspring.service.impl;
 import jakarta.transaction.Transactional;
+import lk.ijse.gdse.possystembackendspring.customObj.CustomerResponse;
+import lk.ijse.gdse.possystembackendspring.customObj.impl.CustomerErrorResponse;
 import lk.ijse.gdse.possystembackendspring.dto.CustomerDTO;
 import lk.ijse.gdse.possystembackendspring.entity.CustomerEntity;
+import lk.ijse.gdse.possystembackendspring.exception.CustomerNotFoundException;
 import lk.ijse.gdse.possystembackendspring.repository.CustomerRepository;
+import lk.ijse.gdse.possystembackendspring.service.CustomerService;
 import lk.ijse.gdse.possystembackendspring.util.AppUtil;
 import lk.ijse.gdse.possystembackendspring.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +38,7 @@ public class CustomerServiceIMPL implements CustomerService {
     public void updateCustomer(String custId, CustomerDTO customerDTO) {
         Optional<CustomerEntity> tmpCustEntity = customerRepository.findById(custId);
         if (tmpCustEntity.isEmpty()) {
-            throw new RuntimeException("Customer Not Found");
+            throw new CustomerNotFoundException("Customer Not Found");
         }else {
             tmpCustEntity.get().setCustName(customerDTO.getCustName());
             tmpCustEntity.get().setAddress(customerDTO.getAddress());
@@ -45,17 +49,17 @@ public class CustomerServiceIMPL implements CustomerService {
     public void deleteCustomer(String custId) {
         Optional<CustomerEntity> findId = customerRepository.findById(custId);
         if (findId.isEmpty()){
-            throw new RuntimeException("Customer Not Found");
+            throw new CustomerNotFoundException("Customer Not Found");
         }else {
             customerRepository.deleteById(custId);
         }
     }
     @Override
-    public CustomerDTO getCustomer(String custId) {
+    public CustomerResponse getCustomer(String custId) {
         if (customerRepository.existsById(custId)){
             return mapping.convertToDto(customerRepository.getReferenceById(custId));
         }else {
-            throw new RuntimeException("Customer Not Found");
+            return new CustomerErrorResponse(0, "Customer Not Found");
         }
     }
     @Override
