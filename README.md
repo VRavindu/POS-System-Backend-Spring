@@ -84,6 +84,8 @@ mvn clean install
 http://localhost:8080
 ```
 
+##Postman Documentation
+For detailed API documentation and testing, please refer to the [Postman Documentation](https://documenter.getpostman.com/view/35384514/2sAXxV7WAC).
 
 ### Usage
 
